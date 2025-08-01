@@ -1,0 +1,23 @@
+import pandas as pd
+from datetime import datetime
+
+# Сбор данных из файлов
+all_data = []
+for file in files:
+    df = pd.read_excel(file, sheet_name=None)
+    for sheet_name, data in df.items():
+        if "Лист1" in sheet_name or "История" in sheet_name: 
+            continue
+        # Парсинг даты и программ
+        # ... (логика обработки)
+        all_data.append((effective_date, program, max_kv))
+
+# Построение сводной таблицы
+pivot_table = pd.pivot_table(
+    pd.DataFrame(all_data, columns=["Дата", "Программа", "КВ"]),
+    index="Программа",
+    columns="Дата",
+    values="КВ",
+    aggfunc="max"
+)
+pivot_table.to_excel("Итоговая_таблица.xlsx")
